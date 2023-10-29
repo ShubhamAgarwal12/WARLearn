@@ -33,6 +33,8 @@ from model import Darknet
 from utils import load_pretrained_torch_state_dict, load_pretrained_darknet_state_dict, ap_per_class, \
     clip_coords, coco80_to_coco91_class, non_max_suppression, scale_coords, xywh2xyxy, xyxy2xywh
 
+import pickle
+
 # Read YAML configuration file
 with open("configs/test/YOLOV3_VOC.yaml", "r") as f:
     config = yaml.full_load(f)
@@ -140,6 +142,11 @@ def test(
     s = ("%20s" + "%10s" * 6) % ("Class", "Images", "Targets", "P", "R", "mAP@0.5", "F1")
     p, r, f1, mp, mr, map50, mf1 = 0., 0., 0., 0., 0., 0., 0.
     jdict, stats, ap, ap_class = [], [], [], []
+    
+    ##latent_dict = {}
+    ##latent_dict_saved = {}
+    ##with open('test_latent_dict.pickle', 'rb') as handle:
+    ##    latent_dict_saved = pickle.load(handle)
 
     for batch_index, (images, targets, paths, shapes) in enumerate(tqdm(test_dataloader, desc=s)):
         images = images.to(device).float() / 255.0  # uint8 to float32, 0 - 255 to 0.0 - 1.0
@@ -150,9 +157,9 @@ def test(
         # Inference
         with torch.no_grad():
             # Run model
-            output, train_out = yolo_model(images,
+            output, train_out, latent_out = yolo_model(images,
                                            image_augment=config["IMAGE_AUGMENT"])  # inference and training outputs
-
+            ##latent_dict[paths[0]] = latent_out          
             # Run NMS
             output = non_max_suppression(output, config["CONF_THRESHOLD"], config["IOU_THRESHOLD"])
 
@@ -219,6 +226,9 @@ def test(
             # Append statistics (correct, conf, pcls, target_classes)
             stats.append((correct.cpu(), pred[:, 4].cpu(), pred[:, 5].cpu(), target_classes))
 
+    ##with open('train_latent_dict.pickle', 'wb') as handle:
+    ##    pickle.dump(latent_dict, handle)
+    
     # Compute statistics
     stats = [np.concatenate(x, 0) for x in zip(*stats)]  # to numpy
     if len(stats):

@@ -28,6 +28,30 @@ __all__ = [
     "compute_loss",
 ]
 
+class BarlowTwinsLoss(torch.nn.Module):
+
+    def __init__(self, device, lambda_param=5e-3):
+        super(BarlowTwinsLoss, self).__init__()
+        self.lambda_param = lambda_param
+        self.device = device
+
+    def forward(self, z_a: torch.Tensor, z_b: torch.Tensor):
+        # normalize repr. along the batch dimension
+        z_a_norm = (z_a - z_a.mean(0)) / z_a.std(0) # NxD
+        z_b_norm = (z_b - z_b.mean(0)) / z_b.std(0) # NxD
+
+        N = z_a.size(0)
+        D = z_a.size(1)
+
+        # cross-correlation matrix
+        c = torch.mm(z_a_norm.T, z_b_norm) / N # DxD
+        # loss
+        c_diff = (c - torch.eye(D,device=self.device)).pow(2) # DxD
+        # multiply off-diagonal elems of c_diff by lambda
+        c_diff[~torch.eye(D, dtype=bool)] *= self.lambda_param
+        loss = c_diff.sum()
+
+        return loss
 
 class Darknet(nn.Module):
     def __init__(
@@ -93,6 +117,9 @@ class Darknet(nn.Module):
             name = module.__class__.__name__
             if name == "_WeightedFeatureFusion":
                 x = module(x, out)
+            elif name == "_WeightedFeatureFusionLatent":
+                x = module(x, out)
+                x_latent = x
             elif name == "_FeatureConcat":
                 x = module(out)
             elif name == "_YOLOLayer":
@@ -103,7 +130,7 @@ class Darknet(nn.Module):
             out.append(x if self.routs[i] else [])
 
         if self.training:  # train
-            return yolo_out
+            return yolo_out, x_latent
         elif self.onnx_export:  # export
             x = [torch.cat(x, 0) for x in zip(*yolo_out)]
             return x[0], torch.cat(x[1:3], 1)  # scores, boxes: 3780x80, 3780x4
@@ -116,7 +143,7 @@ class Darknet(nn.Module):
                 x[1][..., 0] = image_size[1] - x[1][..., 0]  # flip lr
                 x[2][..., :4] /= scale_factor[1]  # scale
                 x = torch.cat(x, 1)
-            return x, p
+            return x, p, x_latent
 
     def fuse(self):
         # Fuse Conv2d + BatchNorm2d layers throughout model
@@ -345,6 +372,44 @@ class _WeightedFeatureFusion(nn.Module):
 
         """
         super(_WeightedFeatureFusion, self).__init__()
+        self.layers = layers  # layer indices
+        self.weight = weight  # apply weights boolean
+        self.n = len(layers) + 1  # number of layers
+        if weight:
+            self.w = nn.Parameter(torch.zeros(self.n), requires_grad=True)  # layer weights
+
+    def forward(self, x: Tensor, outputs: Tensor) -> Tensor:
+        # Weights
+        if self.weight:
+            w = torch.sigmoid(self.w) * (2 / self.n)  # sigmoid weights (0-1)
+            x = x * w[0]
+
+        # Fusion
+        nx = x.shape[1]  # input channels
+        for i in range(self.n - 1):
+            a = outputs[self.layers[i]] * w[i + 1] if self.weight else outputs[self.layers[i]]  # feature to add
+            na = a.shape[1]  # feature channels
+
+            # Adjust channels
+            if nx == na:  # same shape
+                x = x + a
+            elif nx > na:  # slice input
+                x[:, :na] = x[:, :na] + a  # or a = nn.ZeroPad2d((0, 0, 0, 0, 0, dc))(a); x = x + a
+            else:  # slice feature
+                x = x + a[:, :nx]
+
+        return x
+    
+class _WeightedFeatureFusionLatent(nn.Module):
+    def __init__(self, layers: nn.ModuleList, weight: bool = False) -> None:
+        """
+
+        Args:
+            layers:
+            weight:
+
+        """
+        super(_WeightedFeatureFusionLatent, self).__init__()
         self.layers = layers  # layer indices
         self.weight = weight  # apply weights boolean
         self.n = len(layers) + 1  # number of layers
@@ -783,6 +848,12 @@ def _create_modules(
             filters = output_filters[-1]
             routs.extend([i + layer if layer < 0 else layer for layer in layers])
             modules = _WeightedFeatureFusion(layers=layers, weight="weights_type" in module)
+
+        elif module["type"] == "shortcut_latent":  # nn.Sequential() placeholder for "shortcut" layer
+            layers = module["from"]
+            filters = output_filters[-1]
+            routs.extend([i + layer if layer < 0 else layer for layer in layers])
+            modules = _WeightedFeatureFusionLatent(layers=layers, weight="weights_type" in module)
 
         elif module["type"] == "reorg3d":  # yolov3-spp-pan-scale
             pass

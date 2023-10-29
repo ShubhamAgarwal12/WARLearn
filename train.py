@@ -360,7 +360,7 @@ def train(
 
         # Mixed precision training
         with amp.autocast():
-            output = yolo_model(images)
+            output, latent_out = yolo_model(images)
             loss, loss_item = compute_loss(output,
                                            targets,
                                            yolo_model,
