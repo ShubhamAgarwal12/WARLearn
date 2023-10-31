@@ -143,10 +143,10 @@ def test(
     p, r, f1, mp, mr, map50, mf1 = 0., 0., 0., 0., 0., 0., 0.
     jdict, stats, ap, ap_class = [], [], [], []
     
-    ##latent_dict = {}
-    ##latent_dict_saved = {}
-    ##with open('test_latent_dict.pickle', 'rb') as handle:
-    ##    latent_dict_saved = pickle.load(handle)
+    #latent_dict = {}
+    #latent_dict_saved = {}
+    #with open('test_latent_dict.pickle', 'rb') as handle:
+    #    latent_dict_saved = pickle.load(handle)
 
     for batch_index, (images, targets, paths, shapes) in enumerate(tqdm(test_dataloader, desc=s)):
         images = images.to(device).float() / 255.0  # uint8 to float32, 0 - 255 to 0.0 - 1.0
@@ -158,6 +158,7 @@ def test(
         with torch.no_grad():
             # Run model
             output, train_out, latent_out = yolo_model(images,
+                                                       None,
                                            image_augment=config["IMAGE_AUGMENT"])  # inference and training outputs
             ##latent_dict[paths[0]] = latent_out          
             # Run NMS

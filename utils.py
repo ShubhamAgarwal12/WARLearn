@@ -87,7 +87,7 @@ def load_resume_torch_state_dict(
     model = load_torch_state_dict(model, checkpoint["state_dict"])
     if checkpoint["ema_state_dict"] is not None:
         ema_model = load_torch_state_dict(ema_model, checkpoint["ema_state_dict"])
-    optimizer.load_state_dict(checkpoint["optimizer"])
+    #optimizer.load_state_dict(checkpoint["optimizer"])
 
     return model, ema_model, start_epoch, best_map50, optimizer
 
