@@ -29,7 +29,7 @@ from torchvision.ops import boxes
 from tqdm import tqdm
 
 from dataset import parse_dataset_config, LoadImagesAndLabels
-from model import Darknet
+from model_adverse import Darknet
 from utils import load_pretrained_torch_state_dict, load_pretrained_darknet_state_dict, ap_per_class, \
     clip_coords, coco80_to_coco91_class, non_max_suppression, scale_coords, xywh2xyxy, xyxy2xywh
 
@@ -136,7 +136,7 @@ def test(
     yolo_model.eval()
 
     # if test coco91 dataset
-    coco91class = coco80_to_coco91_class()
+    coco91class = coco80_to_coco91_class() #Pascal VOC has less classes than coco, so does not matter
 
     # Format print information
     s = ("%20s" + "%10s" * 6) % ("Class", "Images", "Targets", "P", "R", "mAP@0.5", "F1")
@@ -163,7 +163,17 @@ def test(
             ##latent_dict[paths[0]] = latent_out          
             # Run NMS
             output = non_max_suppression(output, config["CONF_THRESHOLD"], config["IOU_THRESHOLD"])
-
+        
+        #output = output_idx.copy()
+        #for i in range(len(output_idx)):
+        #    d = 0
+        #    for j in range(len(output_idx[i])):
+        #        if (output_idx[i][j][5].item() not in [1,3,4,5,6,7,8,11,13,14]):
+        #             j = j - d
+        #             output[i] = torch.cat((output[i][:j], output[i][j + 1:]))
+        #             d = d + 1
+        
+                
         # Statistics per image
         for si, pred in enumerate(output):
             labels = targets[targets[:, 0] == si, 1:]

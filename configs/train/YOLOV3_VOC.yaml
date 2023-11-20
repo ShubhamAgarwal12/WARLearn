@@ -65,11 +65,11 @@ TRAIN:
   # Model file address, used for pre-training and recovery training
   CHECKPOINT:
     PRETRAINED_MODEL_WEIGHTS_PATH: ""
-    RESUME_MODEL_WEIGHTS_PATH: ""
+    RESUME_MODEL_WEIGHTS_PATH: "results/YOLOV3_VOC_clean/best.pth.tar"
 
   # training hyperparameters
   HYP:
-    IMGS_PER_BATCH: 64
+    IMGS_PER_BATCH: 16
     SHUFFLE: True
     NUM_WORKERS: 4
     PIN_MEMORY: True
@@ -78,8 +78,8 @@ TRAIN:
 
     ACCUMULATE_BATCH_SIZE: 64
 
-    EPOCHS: 300
-    LR: 0.02
+    EPOCHS: 610
+    LR: 0.0002 #0.02
     MOMENTUM: 0.937
     WEIGHT_DECAY: 0.0005
     NESTEROV: True

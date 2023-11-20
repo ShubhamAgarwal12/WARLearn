@@ -835,7 +835,6 @@ class LoadImagesAndLabels(Dataset):
                 ext = label_split[1].split(".")[-1]
                 label_file = label_split[0] + "." + ext
             self.label_files.append(label_file)
-            print(label_file)
 
         # Read image shapes (wh)
         sp = path.replace(".txt", "") + ".shapes"  # shapefile path

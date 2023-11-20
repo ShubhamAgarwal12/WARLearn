@@ -256,21 +256,21 @@ def detect(
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--detect_results_name", type=str, default="yolov3_coco",
+    parser.add_argument("--detect_results_name", type=str, default="yolov3-base",
                         help="detect results name")
-    parser.add_argument("--inputs", type=str, default="./data/coco",
-                        help="Input source. Default: ``./data/coco``.")
-    parser.add_argument("--names_file_path", type=str, default="./data/coco.names",
-                        help="Types of objects detected. Default: ``./data/coco.names``.")
-    parser.add_argument("--model_config_path", type=str, default="./model_configs/yolov3-coco.cfg",
-                        help="model config path. Default: ``./model_configs/yolov3-coco.cfg``.")
+    parser.add_argument("--inputs", type=str, default="./data/ExDark/images/test",
+                        help="Input source. Default: ``./data/ExDark/images/test``.")
+    parser.add_argument("--names_file_path", type=str, default="./data/voc.names",
+                        help="Types of objects detected. Default: ``./data/voc.names``.")
+    parser.add_argument("--model_config_path", type=str, default="./model_configs/yolov3-voc.cfg",
+                        help="model config path. Default: ``./model_configs/yolov3-voc.cfg``.")
     parser.add_argument("--image_size", type=int or tuple, default=416,
                         help="Image size. Default: 416.")
     parser.add_argument("--gray", type=bool, default=False,
                         help="Whether to use gray image. Default: ``False``.")
     parser.add_argument("--model_weights_path", type=str,
-                        default="./results/pretrained_models/YOLOv3-COCO-ee62ed20.pth.tar",
-                        help="Model file weight path. Default: ``./results/pretrained_models/YOLOv3-COCO-ee62ed20.pth.tar``.")
+                        default="./results/YOLOV3_VOC_clean/best.pth.tar",
+                        help="Model file weight path. Default: ``./results/YOLOV3_VOC_clean/best.pth.tar``.")
     parser.add_argument("--device", type=str, default="cpu",
                         help="Device. Default: ``cpu``.")
     parser.add_argument("--half", action="store_true", help="Half precision FP16 inference.")
