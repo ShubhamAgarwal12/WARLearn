@@ -1,4 +1,4 @@
-This repo contains the code for WACV 2025 Paper, WARLearn: Weather Adaptive Representation Learning.
+This repo contains the code for the WACV 2025 Paper, WARLearn: Weather Adaptive Representation Learning.
 The base code for YOLOv3 is taken from this repo: YOLOv3-PyTorch[https://github.com/Lornatang/YOLOv3-PyTorch]
 
 ```bibtex
