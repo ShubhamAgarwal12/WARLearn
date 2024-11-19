@@ -8,6 +8,6 @@ The base code for YOLOv3 is taken from this repo: YOLOv3-PyTorch[https://github.
   title={WARLearn: Weather Adaptive Representation Learning},
   author={Agarwal, Shubham and Birman, Raz and Hadar, Ofer},
   journal = {arXiv},
-  year={2024}
+  year={2025}
 }
 ```
