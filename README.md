@@ -68,25 +68,42 @@ Please refer to the paper for more details about the training parameters setup.
 4. Modify the `WEIGHTS_PATH` in `configs/test/YOLOV3_VOC.yaml` to the model `.pth.tar` path.
 5. Run `test.py` to get the results for mAP@50(%).
 
-### Results and Pre-trained Models
+### Results
 
 Our Framework achieved SOTA performance on both real world foggy (RTTS) and lowlight datasets (ExDark).
 Following is a visualization of object detection performance comparison on lowlight and foggy conditions using vanila YOLOv3 and WARLean. Clearly WARLearn is able to detect more objects and with higher confidence.
-![Object Detection in LowLight](results/lowlight.png)
-![Object Detection in Fog ](results/foggy.png)
 
+#### Results on Low-Light Weather Condition
 
+<img src="results/lowlight.png" alt="Object Detection in LowLight" width="300" height="200">
+
+| Framework | Training Data | Clean | SimLowLight | ExDark |
+| :------------ |:---------------:| :------------ |:---------------:| :------------ |
+| YOLOv3 | Pascal VOC clean | 76.30 | 59.90 | 49.30 |
+| YOLOv3 | Pascal VOC lowlight mixed | 70.20 | 67.60 | 49.90 |
+| ZeroDCE + YOLOv3 | Pascal VOC clean | -- | 63.10 | 48.10 |
+| IA-YOLO | Pascal VOC lowlight mixed | 72.34 | 63.38 | 48.16 |
+| ZeroDCE + WARLearn | Pascal VOC lowlight mixed | -- | 67.00 | 51.30 |
+| FeatEnhancer | Pascal VOC lowlight mixed | -- | 68.20 | 53.70 |
+| WARLearn | Pascal VOC lowlight mixed | 75.50 | 70.90 | 55.70 |
+
+#### Results on Foggy Weather Condition
+
+<img src="results/foggy.png" alt="Object Detection in Fog" width="300" height="200">
+
+| Framework | Training Data | Clean | SimFoggy | RTTS |
+| :------------ |:---------------:| :------------ |:---------------:| :------------ |
+| YOLOv3 | Pascal VOC clean | 76.30 | 53.61 | 46.20 |
+| YOLOv3 | Pascal VOC foggy mixed | 66.80 | 71.20 | 49.00 |
+| C2PNet + YOLOv3 | Pascal VOC clean | -- | 66.50 | 47.70 |
+| IA-YOLO | Pascal VOC foggy mixed | 69.38 | 67.58 | 47.68 |
+| C2PNet + WARLearn | Pascal VOC foggy mixed | -- | 69.30 | 52.00 |
+| WARLearn | Pascal VOC foggy mixed | 69.11 | 75.10| 52.60 |
+
+### Pre-trained Models
 | Training Data | Best Model |
 | :------------ |:---------------:|
-| Pascal VOC train | [best_clean.pt](https://drive.google.com/file/d/1elz_4GNgVmNTcLH6ZPnBLP2m4ccfpOxk/view?usp=drive_link)   |
-| Pascal VOC foggy mixed | [best_foggy_mixed.pt](https://drive.google.com/file/d/1RrpH5DGIoEbPYN2N1lGm6m8yICIWK7nS/view?usp=drive_link)|
-| Pascal VOC lowlight mixed | [best_lowlight_mixed.pt](https://drive.google.com/file/d/19WcchNZixlmeTdtisSE61HvhAkSxUjjq/view?usp=drive_link)    |
-
-
-
-| Training Data | Best Model |
-| :------------ |:---------------:|
-| Pascal VOC train | [best_clean.pt](https://drive.google.com/file/d/1elz_4GNgVmNTcLH6ZPnBLP2m4ccfpOxk/view?usp=drive_link)   |
+| Pascal VOC clean | [best_clean.pt](https://drive.google.com/file/d/1elz_4GNgVmNTcLH6ZPnBLP2m4ccfpOxk/view?usp=drive_link)   |
 | Pascal VOC foggy mixed | [best_foggy_mixed.pt](https://drive.google.com/file/d/1RrpH5DGIoEbPYN2N1lGm6m8yICIWK7nS/view?usp=drive_link)|
 | Pascal VOC lowlight mixed | [best_lowlight_mixed.pt](https://drive.google.com/file/d/19WcchNZixlmeTdtisSE61HvhAkSxUjjq/view?usp=drive_link)    |
 
