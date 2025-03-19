@@ -31,11 +31,8 @@ To replicate the WARLearn experiment, follow these steps:
 
 ### Pre-trained Models
 | Training Data | Model |
-| :-----: | :---: |
 | Pascal VOC train | [best_clean.pt](https://drive.google.com/file/d/1elz_4GNgVmNTcLH6ZPnBLP2m4ccfpOxk/view?usp=drive_link)   |
-| :-----: | :---: |
-| Pascal VOC foggy mixed | [best_foggy_mixed.pt](https://drive.google.com/file/d/1RrpH5DGIoEbPYN2N1lGm6m8yICIWK7nS/view?usp=drive_link)   |
-| :-----: | :---: |
+| Pascal VOC foggy mixed | [best_foggy_mixed.pt](https://drive.google.com/file/d/1RrpH5DGIoEbPYN2N1lGm6m8yICIWK7nS/view?usp=drive_link)|
 | Pascal VOC lowlight mixed | [best_lowlight_mixed.pt](https://drive.google.com/file/d/19WcchNZixlmeTdtisSE61HvhAkSxUjjq/view?usp=drive_link)    |
 
 ### Code References
