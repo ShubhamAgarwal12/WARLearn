@@ -29,6 +29,15 @@ To replicate the WARLearn experiment, follow these steps:
 - RTTS: [https://sites.google.com/view/reside-dehaze-datasets/reside-%CE%B2](https://sites.google.com/view/reside-dehaze-datasets/reside-%CE%B2)
 - ExDark: [https://github.com/cs-chan/Exclusively-Dark-Image-Dataset/tree/master/Dataset](https://github.com/cs-chan/Exclusively-Dark-Image-Dataset/tree/master/Dataset)
 
+### Pre-trained Models
+| Training Data | Model |
+| :-----: | :---: |
+| Pascal VOC train | [best_clean.pt](https://drive.google.com/file/d/1elz_4GNgVmNTcLH6ZPnBLP2m4ccfpOxk/view?usp=drive_link)   |
+| :-----: | :---: |
+| Pascal VOC foggy mixed | [best_foggy_mixed.pt](https://drive.google.com/file/d/1RrpH5DGIoEbPYN2N1lGm6m8yICIWK7nS/view?usp=drive_link)   |
+| :-----: | :---: |
+| Pascal VOC lowlight mixed | [best_lowlight_mixed.pt](https://drive.google.com/file/d/19WcchNZixlmeTdtisSE61HvhAkSxUjjq/view?usp=drive_link)    |
+
 ### Code References
 
 The WARLearn code is built on top of the YOLOv3 code from [Lornatang/YOLOv3-PyTorch](https://github.com/Lornatang/YOLOv3-PyTorch).
