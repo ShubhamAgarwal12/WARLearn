@@ -71,7 +71,9 @@ Please refer to the paper for more details about the training parameters setup.
 ### Results and Pre-trained Models
 
 Our Framework achieved SOTA performance on both real world foggy (RTTS) and lowlight datasets (ExDark).
-
+Following is a visualization of object detection performance comparison on lowlight and foggy conditions using vanila YOLOv3 and WARLean. Clearly WARLearn is able to detect more objects and with higher confidence.
+![Object Detection in LowLight](results/lowlight.png)
+![Object Detection in Fog ](results/foggy.png)
 
 
 | Training Data | Best Model |
