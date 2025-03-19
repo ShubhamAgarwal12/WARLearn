@@ -29,12 +29,6 @@ To replicate the WARLearn experiment, follow these steps:
 - RTTS: [https://sites.google.com/view/reside-dehaze-datasets/reside-%CE%B2](https://sites.google.com/view/reside-dehaze-datasets/reside-%CE%B2)
 - ExDark: [https://github.com/cs-chan/Exclusively-Dark-Image-Dataset/tree/master/Dataset](https://github.com/cs-chan/Exclusively-Dark-Image-Dataset/tree/master/Dataset)
 
-### Pre-trained Models
-| Training Data | Model |
-| Pascal VOC train | [best_clean.pt](https://drive.google.com/file/d/1elz_4GNgVmNTcLH6ZPnBLP2m4ccfpOxk/view?usp=drive_link)   |
-| Pascal VOC foggy mixed | [best_foggy_mixed.pt](https://drive.google.com/file/d/1RrpH5DGIoEbPYN2N1lGm6m8yICIWK7nS/view?usp=drive_link)|
-| Pascal VOC lowlight mixed | [best_lowlight_mixed.pt](https://drive.google.com/file/d/19WcchNZixlmeTdtisSE61HvhAkSxUjjq/view?usp=drive_link)    |
-
 ### Code References
 
 The WARLearn code is built on top of the YOLOv3 code from [Lornatang/YOLOv3-PyTorch](https://github.com/Lornatang/YOLOv3-PyTorch).
@@ -73,6 +67,26 @@ Please refer to the paper for more details about the training parameters setup.
 3. Modify the `test` path in `data/voc.data` to your test data list path.
 4. Modify the `WEIGHTS_PATH` in `configs/test/YOLOV3_VOC.yaml` to the model `.pth.tar` path.
 5. Run `test.py` to get the results for mAP@50(%).
+
+### Results and Pre-trained Models
+
+Our Framework achieved SOTA performance on both real world foggy (RTTS) and lowlight datasets (ExDark).
+
+
+
+| Training Data | Best Model |
+| :------------ |:---------------:|
+| Pascal VOC train | [best_clean.pt](https://drive.google.com/file/d/1elz_4GNgVmNTcLH6ZPnBLP2m4ccfpOxk/view?usp=drive_link)   |
+| Pascal VOC foggy mixed | [best_foggy_mixed.pt](https://drive.google.com/file/d/1RrpH5DGIoEbPYN2N1lGm6m8yICIWK7nS/view?usp=drive_link)|
+| Pascal VOC lowlight mixed | [best_lowlight_mixed.pt](https://drive.google.com/file/d/19WcchNZixlmeTdtisSE61HvhAkSxUjjq/view?usp=drive_link)    |
+
+
+
+| Training Data | Best Model |
+| :------------ |:---------------:|
+| Pascal VOC train | [best_clean.pt](https://drive.google.com/file/d/1elz_4GNgVmNTcLH6ZPnBLP2m4ccfpOxk/view?usp=drive_link)   |
+| Pascal VOC foggy mixed | [best_foggy_mixed.pt](https://drive.google.com/file/d/1RrpH5DGIoEbPYN2N1lGm6m8yICIWK7nS/view?usp=drive_link)|
+| Pascal VOC lowlight mixed | [best_lowlight_mixed.pt](https://drive.google.com/file/d/19WcchNZixlmeTdtisSE61HvhAkSxUjjq/view?usp=drive_link)    |
 
 ## WARLearn Results
 
