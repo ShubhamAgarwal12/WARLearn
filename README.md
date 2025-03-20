@@ -107,15 +107,13 @@ Following is a visualization of object detection performance comparison on lowli
 | Pascal VOC foggy mixed | [best_foggy_mixed.pt](https://drive.google.com/file/d/1RrpH5DGIoEbPYN2N1lGm6m8yICIWK7nS/view?usp=drive_link)|
 | Pascal VOC lowlight mixed | [best_lowlight_mixed.pt](https://drive.google.com/file/d/19WcchNZixlmeTdtisSE61HvhAkSxUjjq/view?usp=drive_link)    |
 
-## WARLearn Results
-
-This code, along with the trained models and the test datasets will be made publicly available after the anonymous review process.
+## Citation
 
 ```bibtex
 @InProceedings{Agarwal_2025_WACV,
     author    = {Agarwal, Shubham and Birman, Raz and Hadar, Ofer},
     title     = {WARLearn: Weather-Adaptive Representation Learning},
-    booktitle = {Proceedings of the Winter Conference on Applications of Computer Vision (WACV)},
+    booktitle = {Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
     month     = {February},
     year      = {2025},
     pages     = {4978-4987}
